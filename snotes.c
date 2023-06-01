@@ -8,7 +8,7 @@
 // dedicated libs
 #include "libs/consts.h"
 #include "libs/file.h"
-//#include "libs/config.h"
+#include "libs/config.h"
 
 int main(int argc, char *argv[])
 {
