@@ -10,7 +10,7 @@
 
 // dedicated libs
 #include "libs/consts.h"
-#include "libs/config.h"
+#include "config.h"
 #include "libs/file.h"
 
 
