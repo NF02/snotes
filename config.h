@@ -1,4 +1,7 @@
 const static char editor[] = "emacs";
-const static char Author[] = "name";
+#define _PROGRAM_NAME "whoami"
+const static char author[] = "name";
 const static char def_direct[] = "/home/nico/Documenti/Note/";
 const static int defDateForm = 1;
+static char def_format[] = "org";
+const static char def_lang[] = "en";

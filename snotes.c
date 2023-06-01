@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <dirent.h> 
 
 // dedicated libs
 #include "libs/consts.h"
@@ -15,15 +16,23 @@
 
 
 int main(int argc, char *argv[])
-{
+{ 
+  //printf("%s\n", getenv("USERPROFILE"));
   if (argc == 2 && !strcmp("-h", argv[1]))
     help();
   else if (argc==2 && !strcmp("-F", argv[1]))
     list_formats();
   else if (argc==3 && !strcmp("new", argv[1]))
-    create_file(argv[2],"org",defDateForm);
+    create_file(argv[2],def_format,defDateForm,argv[2]);
+  else if (argc==3 && !strcmp("-l", argv[1]))
+    search(argv[2]);
   else if (argc==5 && !strcmp("new", argv[1]) && verformat(argv[3]) &&
 	   !strcmp("-f", argv[2]))
-    create_file(argv[4],argv[3],defDateForm);
-  else return 0;
+    create_file(argv[4],argv[3],defDateForm,argv[4]);
+  else if (argc==5 && !strcmp("new", argv[1]) && !strcmp("-t", argv[3]))
+    create_file(argv[2],def_format,defDateForm,argv[4]);
+  else if (argc==5 && !strcmp("-R", argv[1]) && !strcmp("-c", argv[3]))
+    remove_file(argv[4],argv[2]);
+ 
+    return 0;
 }
