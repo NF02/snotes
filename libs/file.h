@@ -6,6 +6,7 @@ static bool verformat(char *str);
 static void list_directory(char *str);
 static void engage(char *format,char *title, char *date, FILE *f);
 static void openEditor(char *file);
+static void verDir();
 
 // Functions developed
 static void help ()
@@ -17,16 +18,14 @@ static void help ()
   --formats-list   [-F]: View the list of formats\n \
   --remove         [-R]: remove notes or directories\n \
   --category       [-c]: search by category\n \
-  --list-directory [-l]: ");
+  --list-directory [-l]: list of directory\n");
   
 }
-
-
 
 // file manager
 static void list_formats()
 {
-  printf("Format list:\n html \n Org Mode\n Markdown\n");
+  printf("Format list:\n- html \n- Org Mode\n- Markdown\n");
 }
 
 static void create_file(char name[], char format[], int date_form, char title[])
@@ -59,9 +58,7 @@ static void create_file(char name[], char format[], int date_form, char title[])
   strcat(file,dateNote);
   strcat(file,"/");
 
-  struct stat st = {0};
-  if (stat(file, &st) == -1)
-    mkdir(file, 0700);
+  verDir(file);
   strcat(file,name); 
   strcat(file,".");
   strcat(file,format);
@@ -132,9 +129,17 @@ static void engage(char *format, char *title, char *date, FILE *f)
 static void openEditor(char *file)
 {
   char cmd[MAX_DIM_NAME_FILE*2];
+  cmd[0]='\0';
   strcat(cmd,editor);
   strcat(cmd," ");
   strcat(cmd,file);
   printf("%s",cmd);
   system(cmd);
+}
+
+static void verDir(char *src)
+{
+  struct stat st = {0};
+  if (stat(src, &st) == -1)
+    mkdir(src, 0700);
 }
