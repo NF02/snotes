@@ -64,9 +64,13 @@ static void create_file(char name[], char format[], int date_form, char title[])
   strcat(file,format);
   note = fopen(file, "w"); 
   engage(format,title,dateNote,note);
-  //openEditor(file);
+
   fclose(note);
+
   printf("The note was created in the format %s with the name %s in %s\n", format,name,file);
+
+  // open text editor
+  openEditor(file);
 }
 
 static bool verformat(char str[])
@@ -129,11 +133,9 @@ static void engage(char *format, char *title, char *date, FILE *f)
 static void openEditor(char *file)
 {
   char cmd[MAX_DIM_NAME_FILE*2];
-  cmd[0]='\0';
   strcat(cmd,editor);
   strcat(cmd," ");
   strcat(cmd,file);
-  printf("%s",cmd);
   system(cmd);
 }
 
