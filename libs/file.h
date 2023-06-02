@@ -7,7 +7,7 @@ static void list_directory(char *str);
 static void engage(char *format,char *title, char *date, FILE *f);
 static void openEditor(char *file);
 static void verDir();
-
+static bool checkFile(const char *filename);
 // Functions developed
 static void help ()
 {
@@ -57,11 +57,15 @@ static void create_file(char name[], char format[], int date_form, char title[])
   }
   strcat(file,dateNote);
   strcat(file,"/");
-
+  
   verDir(file);
-  strcat(file,name); 
+  strcat(file,name);
   strcat(file,".");
   strcat(file,format);
+  if (checkFile(file)){
+    printf("Error: the note already exists");
+    exit(-5);
+  }
   note = fopen(file, "w"); 
   engage(format,title,dateNote,note);
 
@@ -113,6 +117,7 @@ static void search(char *str)
     closedir(d);
   } else printf("Error: the directory does not exist!\n");
 }
+
 static void engage(char *format, char *title, char *date, FILE *f)
 { 
   if (!strcmp("org", format))
@@ -136,6 +141,7 @@ static void openEditor(char *file)
   strcat(cmd,editor);
   strcat(cmd," ");
   strcat(cmd,file);
+  strcat(cmd," &");
   system(cmd);
 }
 
@@ -144,4 +150,16 @@ static void verDir(char *src)
   struct stat st = {0};
   if (stat(src, &st) == -1)
     mkdir(src, 0700);
+}
+
+static bool checkFile(const char *filename)
+{
+    FILE *file;
+    if (file = fopen(filename, "r"))
+    {
+        fclose(file);
+        return true;
+    }
+
+    return false;
 }
