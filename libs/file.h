@@ -41,22 +41,23 @@ static void create_file(char name[], char format[], int date_form, char title[])
   
   FILE *note;
   strcat(file,def_direct);
-  char string[DATE_DIM];
+  char dateNote[DATE_DIM];
   switch (date_form) {
   case 1:
-    sprintf(string, "%d-%d-%d/", tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
+    sprintf(dateNote, "%d-%d-%d", tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
     break;
   case 2:
-    sprintf(string, "%d-%d-%d/", tm.tm_mon+1,tm.tm_mday,tm.tm_year+1900);
+    sprintf(dateNote, "%d-%d-%d", tm.tm_mon+1,tm.tm_mday,tm.tm_year+1900);
     break;
   case 3:
-    sprintf(string, "%d-%d-%d/", tm.tm_year+1900, tm.tm_mon+1,tm.tm_mday);
+    sprintf(dateNote, "%d-%d-%d", tm.tm_year+1900, tm.tm_mon+1,tm.tm_mday);
     break;
   default:
     printf("Error: Invalid time setting");
     exit(-3);
   }
-  strcat(file,string);
+  strcat(file,dateNote);
+  strcat(file,"/");
 
   struct stat st = {0};
   if (stat(file, &st) == -1)
@@ -65,7 +66,7 @@ static void create_file(char name[], char format[], int date_form, char title[])
   strcat(file,".");
   strcat(file,format);
   note = fopen(file, "w"); 
-  engage(format,title,string,note);
+  engage(format,title,dateNote,note);
   //openEditor(file);
   fclose(note);
   printf("The note was created in the format %s with the name %s in %s\n", format,name,file);
@@ -112,18 +113,18 @@ static void search(char *str)
   } else printf("Error: the directory does not exist!\n");
 }
 static void engage(char *format, char *title, char *date, FILE *f)
-{
-  if (format == "org")
+{ 
+  if (!strcmp("org", format))
     fprintf (f, "#+author: %s\n#+title: %s\n#+date: %s \n\n* %s\n",author, title,\
 	     date,title);
-  else if (format == "md")
+  else if (!strcmp("md", format))
      fprintf (f, "---\nauthor: %s\ntitle: %s\ndate: %s\n--- \n\n# %s\n",author, title,\
 	     date,title);
-  else if (format == "html")
+  else if (!strcmp("html", format))
     fprintf (f, "<!-- author: %s title: %s date: %s -->\n <!DOCTYPE html>\n \
 	<html>\n<head>\n<title>%s</title>\n<meta charset=\"utf-8\">\n</head>\n<body>\n \
 <h1>%s<h1>\n\n</body>\n</html>",author, title, date,title,title);
-  else if (format == "txt")
+  else if (!strcmp("txt", format))
     fprintf (f, "author: %s\ntitle: %s\ndate: %s \n------------\n",author, title, \
 	     date);
 
