@@ -11,7 +11,8 @@ MANPREFIX = ${PREFIX}/share/man
 # flags
 #CPPFLAGS = -DVERSION=\"${VERSION}\"
 #CFLAGS   = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
-CFLAGS   = -std=c11 #${CPPFLAGS}
+LDFLAGS = $(shell pkg-config --libs libgit2)
+CFLAGS   = -std=c11 $(shell pkg-config --cflags libgit2) #${CPPFLAGS}
 
 # compiler and linker
 CC = cc

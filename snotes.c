@@ -10,12 +10,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
-
+#include <git2.h>
 // dedicated libs
 #include "libs/consts.h"
 #include "config.h"
 #include "libs/file.h"
-
+#include "libs/gitSync.h"
 
 int main(int argc, char *argv[])
 { 
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	else // list of directory 
 	  if (argc==3 && (!strcmp("-l", argv[1]) || !strcmp("--list-directory", argv[1])))
 	    search(argv[2]);
-	  else
+	  else // open a file
 	    if (argc==3 && !strcmp("open", argv[1])) 
 	      openFile(argv[2],getDate(defDateForm));
 	    else // creates a file with the format chosen by the user
@@ -46,8 +46,9 @@ int main(int argc, char *argv[])
 	      else // removes a file by name and by day created.
 		if (argc==5 && (!strcmp("-R", argv[1]) || !strcmp("--remove", argv[1])) && (!strcmp("-c", argv[3]) || !strcmp("--category", argv[3])))
 		  remove_file(argv[4],argv[2]);
-		else if (argc==5 && (!strcmp("-R", argv[1]) || !strcmp("--remove", argv[1])) && (!strcmp("-c", argv[3]) || !strcmp("--category", argv[3])))
-		  remove_file(argv[4],argv[2]);
-		else help();
+		else // 
+		  if (argc==5 && !strcmp("open", argv[1]) && (!strcmp("-c", argv[3]) || !strcmp("--category", argv[3])))
+		    openFile(argv[2],argv[4]);
+		  else help();
     return 0;
 }

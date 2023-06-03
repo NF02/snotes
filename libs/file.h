@@ -9,6 +9,8 @@
 -------------------------------------------
 Author: Nicola Ferru aka NFVblog
 */
+//#include "consts.h"
+#include "error.h"
 
 static void help();
 static void list_formats();
@@ -21,7 +23,7 @@ static void openEditor(char *file);
 static void verDir();
 static bool checkFile(const char *filename);
 static void openFile(const char *filename, const char *cat);
-static char *getDate(int date_form);
+static char *getDate(int date_form); // gen current date
 
 // Functions developed
 static void help ()
@@ -63,18 +65,18 @@ static void create_file(char name[], char format[], int date_form, char title[])
   strcat(file,".");
   strcat(file,format);
   if (checkFile(file)){
-    printf("Error: the note already exists");
-    exit(-5);
+    printerr("The file already exists",-2);
+  } else {
+    note = fopen(file, "w"); 
+    engage(format,title,dateNote,note);
+
+    fclose(note);
+
+    printf("The note was created in the format %s with the name %s in %s\n", format,name,file);
+
+    // open text editor
+    openEditor(file);
   }
-  note = fopen(file, "w"); 
-  engage(format,title,dateNote,note);
-
-  fclose(note);
-
-  printf("The note was created in the format %s with the name %s in %s\n", format,name,file);
-
-  // open text editor
-  openEditor(file);
 }
 
 static bool verformat(char str[])
@@ -98,7 +100,7 @@ static void remove_file(char cat[], char name[])
   if(removed == 0) {
     printf("Note deleted successfully\n");
   } else {
-    printf("Error: unable to delete the note\n");
+    printerr("Note does not exist",-6);
   }
 }
 
@@ -115,7 +117,7 @@ static void search(char *str)
       printf("%s\n", dir->d_name);
     } 
     closedir(d);
-  } else printf("Error: the directory does not exist!\n");
+  } else printerr("the directory does not exist",-4);
 }
 
 static void engage(char *format, char *title, char *date, FILE *f)
@@ -196,8 +198,7 @@ static char *getDate(int date_form)
     sprintf(dateNote, "%d-%d-%d", tm.tm_year+1900, tm.tm_mon+1,tm.tm_mday);
     break;
   default:
-    printf("Error: Invalid time setting");
-    exit(-3);
+    printerr("the date format is invalid",-1);
   }
   return dateNote;
 }
