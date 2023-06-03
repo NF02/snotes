@@ -171,7 +171,7 @@ static void openFile(const char *filename, const char *cat)
   strcat(file,cat);
   strcat(file,"/");
   strcat(file,filename);
-  //printf("%s",file);
+  //printf("%s",file); // debug instruction
   if(checkFile(file))
     {
       openEditor(file);

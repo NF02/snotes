@@ -1,12 +1,17 @@
-.TH DWM 1 dwm\-VERSION
+.TH SNotes 1 SNotes\-VERSION
 .SH NAME
-dwm \- dynamic window manager
+SNotes \- Simple Notes
 .SH SYNOPSIS
-.B dwm
+.B snotes
 .RB [ \-v ]
+.RB [ \-h ]
+.RB [ \-F ]
+.RB [ \-R ]
+.RB [ \-l ]
+.RB [ \-T ]
 .SH DESCRIPTION
 SNotes (Simple Notes) is a note manager designed to be simple, fast and practical.
-It allows you to set notes in the following formats HTML, Emacs Org Mode and Markdown.
+It allows you to set notes in the following formats HTML (.html), Emacs Org Mode (.org) and Markdown (.md).
 .SH OPTIONS
 .TP
 .B \-v
@@ -14,4 +19,24 @@ prints version information to stderr, then exits.
 
 .TP
 .B \-h
-prints help information to stderr, then exits.
+prints the help to allow the user to check the parameters present.
+
+.TP
+.B \-F
+print the list of supported formats
+
+.TP
+.B \-R
+allows you to remove a note by passing it the name and day it was created in the format
+specified in the config.h file.
+.p
+Ex. snote \-R name\_of\_file \-c name\_of\_directory.
+
+.TP
+.B \-c
+this parameter is used to search by category, in fact, an example is used in the note removal function.
+
+.TP
+.B \-l
+prints the contents of a directory passing the name of the above, its effectiveness is limited to sub directories of the Notes directory.
+

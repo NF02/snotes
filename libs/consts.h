@@ -1,3 +1,13 @@
+/* See LICENSE for license details */
+/*                             ▄                  █
+  ▄▄▄    ▄▄▄   ▄ ▄▄    ▄▄▄   ▄▄█▄▄   ▄▄▄          █ ▄▄
+ █▀  ▀  █▀ ▀█  █▀  █  █   ▀    █    █   ▀         █▀  █
+ █      █   █  █   █   ▀▀▀▄    █     ▀▀▀▄         █   █
+ ▀█▄▄▀  ▀█▄█▀  █   █  ▀▄▄▄▀    ▀▄▄  ▀▄▄▄▀    █    █   █
+
+---------------------------------------------------------
+Author: Nicola Ferru Aka NFVblog
+*/
 #define MAX_DIM_NAME_FILE 100
 #define DATE_DIM 10
 
