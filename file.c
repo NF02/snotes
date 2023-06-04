@@ -28,7 +28,6 @@ Author: Nicola Ferru aka NFVblog
 #include <unistd.h>
 #include <dirent.h> 
 #include <git2.h>
-#include"file.h"
 #include"consts.h"
 #include"config.h"
 
