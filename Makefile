@@ -3,7 +3,7 @@
 
 include config.mk
 
-SRC = snotes.c
+SRC = snotes.c file.c  
 OBJ = ${SRC:.c=.o}
 
 all: options snotes
@@ -16,7 +16,7 @@ options:
 .c.o:
 	${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.h config.mk libs/file.h libs/consts.h
+${OBJ}: config.h config.mk
 
 config.h:
 	cp config.def.h $@

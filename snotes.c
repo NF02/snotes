@@ -12,10 +12,10 @@
 #include <dirent.h> 
 #include <git2.h>
 // dedicated libs
-#include "libs/consts.h"
+#include "consts.h"
 #include "config.h"
-#include "libs/file.h"
-#include "libs/gitSync.h"
+#include "file.h"
+//#include "libs/gitSync.h"
 
 int main(int argc, char *argv[])
 { 

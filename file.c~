@@ -1,29 +1,37 @@
 /* See LICENSE for license details */
 /*
-   ▄▀▀    ▀    ▀▀█                  █
- ▄▄█▄▄  ▄▄▄      █     ▄▄▄          █ ▄▄
-   █      █      █    █▀  █         █▀  █
-   █      █      █    █▀▀▀▀         █   █
-   █    ▄▄█▄▄    ▀▄▄  ▀█▄▄▀    █    █   █
+  
+   ▒██    █    ███
+   █░            █
+   █             █
+ █████  ███      █     ███           ▓██▒
+   █      █      █    ▓▓ ▒█         ▓█  ▓
+   █      █      █    █   █         █░
+   █      █      █    █████         █
+   █      █      █    █             █░
+   █      █      █░   ▓▓  █    █    ▓█  ▓
+   █    █████    ▒██   ███▒    █     ▓██▒
 
 -------------------------------------------
 Author: Nicola Ferru aka NFVblog
 */
-//#include "consts.h"
-#include "error.h"
 
-static void help();
-static void list_formats();
-static void create_file(char name[], char format[], int date_form, char title[]);
-static void remove_file(char cat[], char name[]);
-static bool verformat(char *str);
-static void list_directory(char *str);
-static void engage(char *format,char *title, char *date, FILE *f);
-static void openEditor(char *file);
-static void verDir();
-static bool checkFile(const char *filename);
-static void openFile(const char *filename, const char *cat);
-static char *getDate(int date_form); // gen current date
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+#include <stdint.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h> 
+#include <git2.h>
+#include"file.h"
+#include"consts.h"
+#include"config.h"
+
 
 // Functions developed
 static void help ()
@@ -201,4 +209,11 @@ static char *getDate(int date_form)
     printerr("the date format is invalid",-1);
   }
   return dateNote;
+}
+
+// print instruction for errors
+static void printerr(char *err, int err_code)
+{
+  printf("Error %d: %s\n",err_code, err);
+  exit(err_code);
 }
