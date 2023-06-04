@@ -32,21 +32,21 @@ Author: Nicola Ferru aka NFVblog
 #include"config.h"
 
 
-static void help();
-static void list_formats();
-static void create_file(char name[], char format[], int date_form, char title[]);
-static void remove_file(char cat[], char name[]);
-static bool verformat(char *str);
-static void list_directory(char *str);
-static void engage(char *format,char *title, char *date, FILE *f);
-static void openEditor(char *file);
-static void verDir();
-static bool checkFile(const char *filename);
-static void openFile(const char *filename, const char *cat);
-static char *getDate(int date_form); // gen current date
-static void printerr(char *err, int err_code);
+void help();
+void list_formats();
+void create_file(char name[], char format[], int date_form, char title[]);
+void remove_file(char cat[], char name[]);
+bool verformat(char *str);
+void list_directory(char *str);
+void engage(char *format,char *title, char *date, FILE *f);
+void openEditor(char *file);
+void verDir();
+bool checkFile(const char *filename);
+void openFile(const char *filename, const char *cat);
+char *getDate(int date_form); // gen current date
+void printerr(char *err, int err_code);
 // Functions developed
-static void help ()
+void help ()
 {
   printf("┏━┛┏━ ┏━┃━┏┛┏━┛┏━┛\n");
   printf("━━┃┃ ┃┃ ┃ ┃ ┏━┛━━┃\n");
@@ -63,12 +63,12 @@ static void help ()
 }
 
 // file manager
-static void list_formats()
+void list_formats()
 {
   printf("Format list:\n- html \n- Org Mode\n- Markdown\n");
 }
 
-static void create_file(char name[], char format[], int date_form, char title[])
+void create_file(char name[], char format[], int date_form, char title[])
 {
   char file[MAX_DIM_NAME_FILE];
   
@@ -99,7 +99,7 @@ static void create_file(char name[], char format[], int date_form, char title[])
   }
 }
 
-static bool verformat(char str[])
+bool verformat(char str[])
 {
   // Function that checks for supported formats
   if(!strcmp(str, "org") || !strcmp(str, "md") || !strcmp(str, "html"))
@@ -107,7 +107,7 @@ static bool verformat(char str[])
   else return false;
 }
 
-static void remove_file(char cat[], char name[])
+void remove_file(char cat[], char name[])
 {
   char file[MAX_DIM_NAME_FILE];
   int removed;
@@ -124,7 +124,7 @@ static void remove_file(char cat[], char name[])
   }
 }
 
-static void search(char *str)
+void search(char *str)
 {
   char directory[MAX_DIM_NAME_FILE];
   strcat(directory,def_direct);
@@ -140,7 +140,7 @@ static void search(char *str)
   } else printerr("the directory does not exist",-4);
 }
 
-static void engage(char *format, char *title, char *date, FILE *f)
+void engage(char *format, char *title, char *date, FILE *f)
 { 
   if (!strcmp("org", format))
     fprintf (f, "#+author: %s\n#+title: %s\n#+date: %s \n\n* %s\n",author, title,\
@@ -157,7 +157,7 @@ static void engage(char *format, char *title, char *date, FILE *f)
 	     date);
 
 }
-static void openEditor(char *file)
+void openEditor(char *file)
 {
   char cmd[MAX_DIM_NAME_FILE*2];
   strcat(cmd,editor);
@@ -167,14 +167,14 @@ static void openEditor(char *file)
   system(cmd);
 }
 
-static void verDir(char *src)
+void verDir(char *src)
 {
   struct stat st = {0};
   if (stat(src, &st) == -1)
     mkdir(src, 0700);
 }
 
-static bool checkFile(const char *filename)
+bool checkFile(const char *filename)
 {
     FILE *file;
     if (file = fopen(filename, "r"))
@@ -186,7 +186,7 @@ static bool checkFile(const char *filename)
     return false;
 }
 
-static void openFile(const char *filename, const char *cat)
+void openFile(const char *filename, const char *cat)
 {
   char file[MAX_DIM_NAME_FILE];
   strcat(file,def_direct);
@@ -200,7 +200,7 @@ static void openFile(const char *filename, const char *cat)
     }
 }
 
-static char *getDate(int date_form)
+char *getDate(int date_form)
 {
   char *dateNote=malloc(sizeof(char) * 6);
   time_t t;
@@ -224,7 +224,7 @@ static char *getDate(int date_form)
 }
 
 // print instruction for errors
-static void printerr(char *err, int err_code)
+void printerr(char *err, int err_code)
 {
   printf("Error %d: %s\n",err_code, err);
   exit(err_code);
