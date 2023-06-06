@@ -144,17 +144,17 @@ void search(char *str)
 void engage(char *format, char *title, char *date, FILE *f)
 { 
   if (!strcmp("org", format))
-    fprintf (f, "#+author: %s\n#+title: %s\n#+date: %s \n\n* %s\n",author, title,\
-	     date,title);
+    fprintf (f, "#+author: %s\n#+title: %s\n#+date: %s %s \n\n* %s\n",author, title,\
+	     date,getHours_note(),title);
   else if (!strcmp("md", format))
-     fprintf (f, "---\nauthor: %s\ntitle: %s\ndate: %s\n--- \n\n# %s\n",author, title,\
-	     date,title);
+     fprintf (f, "---\nauthor: %s\ntitle: %s\ndate: %s %s\n--- \n\n# %s\n",author, title,\
+	      date,getHours_note(),title);
   else if (!strcmp("html", format))
     fprintf (f, "<!-- author: %s title: %s date: %s -->\n <!DOCTYPE html>\n <html lang=\"%s\">\n<head>\n<title>%s</title>\n<meta charset=\"utf-8\">\n</head>\n<body>\n \
 <h1>%s<h1>\n\n</body>\n</html>",author, title, date,def_lang,title,title,title);
   else if (!strcmp("txt", format))
-    fprintf (f, "author: %s\ntitle: %s\ndate: %s \n------------\n",author, title, \
-	     date);
+    fprintf (f, "author: %s\ntitle: %s\ndate: %s %s \n------------\n",author, title, \
+	     date, getHours_note());
 
 }
 void openEditor(char *file)
