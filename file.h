@@ -24,4 +24,5 @@ bool checkFile(const char *filename);
 void openFile(const char *filename, const char *cat);
 char *getDate(int date_form); // gen current date
 void printerr(char *err, int err_code);
+void search(char *str);
 #endif

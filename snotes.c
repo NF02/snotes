@@ -15,6 +15,7 @@
 #include "consts.h"
 #include "config.h"
 #include "file.h"
+#include "timeGet.h"
 //#include "libs/gitSync.h"
 
 int main(int argc, char *argv[])
@@ -37,7 +38,10 @@ int main(int argc, char *argv[])
 	  else // open a file
 	    if (argc==3 && !strcmp("open", argv[1])) 
 	      openFile(argv[2],getDate(defDateForm));
-	    else // creates a file with the format chosen by the user
+	    else
+	      if (argc==3 && (!strcmp("-R", argv[1]) || !strcmp("--remove", argv[1])))
+		remove_file(argv[2],getDate(defDateForm));
+		else // creates a file with the format chosen by the user
 	    if (argc==5 && !strcmp("new", argv[1]) && verformat(argv[3]) && !strcmp("-f", argv[2]))
 	      create_file(argv[4],argv[3],defDateForm,argv[4]);
 	    else // creates a file with a title chosen by the author
@@ -46,7 +50,7 @@ int main(int argc, char *argv[])
 	      else // removes a file by name and by day created.
 		if (argc==5 && (!strcmp("-R", argv[1]) || !strcmp("--remove", argv[1])) && (!strcmp("-c", argv[3]) || !strcmp("--category", argv[3])))
 		  remove_file(argv[4],argv[2]);
-		else // 
+		else // removes a file by name and by day created. 
 		  if (argc==5 && !strcmp("open", argv[1]) && (!strcmp("-c", argv[3]) || !strcmp("--category", argv[3])))
 		    openFile(argv[2],argv[4]);
 		  else help();

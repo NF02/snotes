@@ -45,6 +45,7 @@ void verDir();
 bool checkFile(const char *filename);
 void openFile(const char *filename, const char *cat);
 void printerr(char *err, int err_code);
+void search(char *str);
 // Functions developed
 void help ()
 {
