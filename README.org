@@ -3,10 +3,49 @@
 SNots (Simple Notes) is an app for creating and managing notes.
 
 ** Supported file formats
-
-| *HTML*     | Very popular format used for web pages                                                  |
-| *Markdown* | Format used to make documentation within the platforms for sharing the code             |
-| *Org mode* | Format conceived by the Emacs community and thought to be perfectly integrated with it. |
+| Format     | SNotes name format | Description                                                                             |
+| *HTML*     | (html)             | Very popular format used for web pages                                                  |
+| *Markdown* | (md)               | Format used to make documentation within the platforms for sharing the code             |
+| *Org mode* | (org)              | Format conceived by the Emacs community and thought to be perfectly integrated with it. |
+| *TXT*      | (txt)              | Unformatted basic format                                                                |
 
 ** Editors
 The software will use the system's default text editor.
+
+** Use and functions of the app
+*** Basic note management
+**** Basic creation of a note
+#+begin_src bash
+  snotes new <note_name>
+#+end_src
+The notes have the default format Org mode but it can be changed from the ~config.h~ file, by changing the ~def_format[]~
+parameter
+**** Creating a note with a format chosen by the user
+#+begin_src bash
+  snotes new -f <format> <note_name>
+#+END_SRC
+**** Create notes with extended title
+#+begin_src bash
+  snotes new <note_name> -t <title>
+#+END_SRC
+
+**** Removes a file by name and by day created.
+#+begin_src bash
+  snotes --remove <note_name> -c <date>
+#+END_SRC
+
+**** open a file
+in case the note was created on the same day you want to open it:
+#+begin_src bash
+  snotes open <note_name>
+#+end_src
+otherwise
+#+begin_src bash
+  snotes open <note_name> -c <date>
+#+END_SRC
+
+*** Other functions
+**** List of formats
+#+begin_src bash
+  snotes -F
+#+end_src
