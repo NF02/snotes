@@ -3,7 +3,7 @@
 
 include config.mk
 
-SRC = snotes.c file.c gitSync.c  
+SRC = snotes.c file.c gitSync.c timeGet.c
 OBJ = ${SRC:.c=.o}
 
 all: options snotes

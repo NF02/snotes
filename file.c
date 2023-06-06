@@ -28,8 +28,9 @@ Author: Nicola Ferru aka NFVblog
 #include <unistd.h>
 #include <dirent.h> 
 #include <git2.h>
-#include"consts.h"
-#include"config.h"
+#include "consts.h"
+#include "timeGet.h"
+#include "config.h"
 
 
 void help();
@@ -43,7 +44,6 @@ void openEditor(char *file);
 void verDir();
 bool checkFile(const char *filename);
 void openFile(const char *filename, const char *cat);
-char *getDate(int date_form); // gen current date
 void printerr(char *err, int err_code);
 // Functions developed
 void help ()
@@ -102,7 +102,7 @@ void create_file(char name[], char format[], int date_form, char title[])
 bool verformat(char str[])
 {
   // Function that checks for supported formats
-  if(!strcmp(str, "org") || !strcmp(str, "md") || !strcmp(str, "html"))
+  if(!strcmp(str, "org") || !strcmp(str, "md") || !strcmp(str, "html") || !strcmp(str, "txt"))
     return true;
   else return false;
 }
@@ -149,9 +149,8 @@ void engage(char *format, char *title, char *date, FILE *f)
      fprintf (f, "---\nauthor: %s\ntitle: %s\ndate: %s\n--- \n\n# %s\n",author, title,\
 	     date,title);
   else if (!strcmp("html", format))
-    fprintf (f, "<!-- author: %s title: %s date: %s -->\n <!DOCTYPE html>\n \
-	<html lang="">\n<head>\n<title>%s</title>\n<meta charset=\"utf-8\">\n</head>\n<body>\n \
-<h1>%s<h1>\n\n</body>\n</html>",author, title, date,title,def_lang,title);
+    fprintf (f, "<!-- author: %s title: %s date: %s -->\n <!DOCTYPE html>\n <html lang=\"%s\">\n<head>\n<title>%s</title>\n<meta charset=\"utf-8\">\n</head>\n<body>\n \
+<h1>%s<h1>\n\n</body>\n</html>",author, title, date,def_lang,title,title,title);
   else if (!strcmp("txt", format))
     fprintf (f, "author: %s\ntitle: %s\ndate: %s \n------------\n",author, title, \
 	     date);
@@ -198,29 +197,6 @@ void openFile(const char *filename, const char *cat)
     {
       openEditor(file);
     }
-}
-
-char *getDate(int date_form)
-{
-  char *dateNote=malloc(sizeof(char) * 6);
-  time_t t;
-  
-  t=time(NULL);
-  struct tm tm = *localtime(&t);
-  switch (date_form) {
-  case 1:
-    sprintf(dateNote, "%d-%d-%d", tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
-    break;
-  case 2:
-    sprintf(dateNote, "%d-%d-%d", tm.tm_mon+1,tm.tm_mday,tm.tm_year+1900);
-    break;
-  case 3:
-    sprintf(dateNote, "%d-%d-%d", tm.tm_year+1900, tm.tm_mon+1,tm.tm_mday);
-    break;
-  default:
-    printerr("the date format is invalid",-1);
-  }
-  return dateNote;
 }
 
 // print instruction for errors
