@@ -21,7 +21,7 @@ const static char fm[] = "st -e ranger";
 const static char author[] = "name";
 
 /* Note directory*/
-static char def_direct[] = "/home/<USER>/Documenti/Note/";
+static char def_direct[] = "/home/nico/Documenti/Note/";
 
 /* Default date format */
 const static int defDateForm = 1;
