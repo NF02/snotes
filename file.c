@@ -155,6 +155,10 @@ void engage(char *format, char *title, char *date, FILE *f)
   else if (!strcmp("txt", format))
     fprintf (f, "author: %s\ntitle: %s\ndate: %s %s \n------------\n",author, title, \
 	     date, getHours_note());
+  else if (!strcmp("ASCIIMathML", format))
+    fprintf (f, "<!-- author: %s title: %s date: %s -->\n<!DOCTYPE html>\n <html lang=\"%s\">\n<head>\n<script type=\"text/javascript\" src=\"ASCIIMathML.js\"></script>\n<title>%s</title>\n<meta charset=\"utf-8\">\n</head>\n<body>\n \
+<h1>%s<h1>\n\n</body>\n</html>",author, title, date,def_lang,title,title,title);
+
 
 }
 void openEditor(char *file)
